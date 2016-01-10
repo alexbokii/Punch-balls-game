@@ -1,0 +1,14 @@
+{
+  "name": "game",
+  "version": "1.0.0",
+  "description": "Create line of 5 balls using the same colour",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Bokii",
+  "license": "ISC",
+  "devDependencies": {
+    "lodash": "^3.10.1"
+  }
+}
