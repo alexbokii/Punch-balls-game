@@ -3,3 +3,13 @@ Lodash
 
 1. Create 10x10 boxes
 2. Create 3 random balls
+
+3. Colours: 
+    -red - 
+    -green
+    -light-blue
+    -yellow
+    -orange
+    -dark-blue
+    -purple
+
