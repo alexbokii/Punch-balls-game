@@ -1,7 +1,9 @@
 // init
 var squares = $('.square');
 addMoreBalls(5);
+
 var ballsArray = [];
+var score = 0;
 
 for(var i = 0; i < squares.length; i++) {
     $(squares[i]).attr('id', 'square' + (i + 1));
@@ -55,32 +57,33 @@ function checkHorizontalBlocks() {
     var rows = _.chunk(ballsArray, 10);
     for(var i = 0; i < rows.length; i++) {
         var match = checkMatches(rows[i]);
-        if(match > 4) {
-            alert("Win");
+        if(match.length > 4) {
+            removeBallsFromGame(match);
+            updateScore(match.length);
         }
     }
 }
 
 function checkMatches(ar) {
-    
-    var match = 1;
+    console.log("ROW:", ar);
+    var match = [];
     for(var i = 0; i < ar.length; i++) {
        
-        if(typeof ar[i] !== 'boolean' &&
-            typeof ar[i + 1] !== 'boolean' &&
-            typeof ar[i] === 'object' &&
-            typeof ar[i + 1] === 'object') {
-            
-            if(ar[i].color == ar[i + 1].color) {
-                match ++;
-                console.log("Adding: ", match);
-            }
-            if(match > 4) {
-                return match;
+        if(typeof ar[i] !== 'boolean'  &&
+            typeof ar[i] === 'object') {
+            console.log(ar[i]);
+            if(typeof ar[i + 1] === 'object' && ar[i].color == ar[i + 1].color ||
+                typeof ar[i - 1] === 'object' && ar[i].color == ar[i - 1].color) {
+                match.push(ar[i].domEl);
             }
         }
         else {
-            match = 1;
+            if(match.length > 4) {
+                return match;
+            }
+            else {
+                match = [];
+            }
         }
     }
     return match;
@@ -106,4 +109,13 @@ function updateDom() {
    });
 };
 
-updateDom();
+function removeBallsFromGame(arr) {
+    _.times(arr.length, function(i) {
+        $(arr[i]).remove();
+    });
+}
+
+function updateScore(newscore) {
+    score += newscore * 2;
+    $('.score h3').html(score);
+}
