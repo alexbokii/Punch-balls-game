@@ -52,12 +52,10 @@ function targetIsEmpty(target) {
 
 // check if block of 5 balls is ready
 function checkHorizontalBlocks() {
-    console.log("run");
     var rows = _.chunk(ballsArray, 10);
-    console.log(rows);
     for(var i = 0; i < rows.length; i++) {
         var match = checkMatches(rows[i]);
-        if(match == 4) {
+        if(match > 4) {
             alert("Win");
         }
     }
@@ -65,24 +63,27 @@ function checkHorizontalBlocks() {
 
 function checkMatches(ar) {
     
-    var match = 0;
+    var match = 1;
     for(var i = 0; i < ar.length; i++) {
        
         if(typeof ar[i] !== 'boolean' &&
-            typeof ar[(i + 1)] !== 'boolean' &&
-            ar[i].color == ar[(i + 1)].color) {
-            console.log(ar[i].color == ar[(i + 1)].color);
-            match ++;
-            if(match > 2) {
+            typeof ar[i + 1] !== 'boolean' &&
+            typeof ar[i] === 'object' &&
+            typeof ar[i + 1] === 'object') {
+            
+            if(ar[i].color == ar[i + 1].color) {
+                match ++;
+                console.log("Adding: ", match);
+            }
+            if(match > 4) {
                 return match;
             }
         }
         else {
-            match = 0;
+            match = 1;
         }
     }
-
-     return match;
+    return match;
 }
 
 function checkVerticalBlocks() {
@@ -98,12 +99,11 @@ function updateDom() {
         }
         else {
             ballsArray.push({
-                domEl: $(squares)[i].children[0],
-                color: $(squares)[i].children[0].className
+                'domEl': $(squares)[i].children[0],
+                'color': $(squares)[i].children[0].className
             });
         }
    });
-   console.log(ballsArray.length);
 };
 
 updateDom();
