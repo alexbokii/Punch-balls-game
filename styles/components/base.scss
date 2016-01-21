@@ -32,19 +32,25 @@
         margin-top: 2%;
 
         &.ball-red {
-            background-color: red;
+            background-color: #E74C3C;
         }
 
         &.ball-yellow {
-            background-color: yellow;
+            background-color: #F1C40F;
         }
 
         &.ball-blue {
-            background-color: blue;
+            background-color: #3498DB;
         }
 
         &.ball-green {
-            background-color: green;
+            background-color: #27AE60;
+        }
+        &.ball-purple {
+            background-color: #884EA0;
+        }
+        &.ball-black {
+            background-color: #283747;
         }
     }
 }

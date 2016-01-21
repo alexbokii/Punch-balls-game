@@ -13,7 +13,7 @@ for(var i = 0; i < squares.length; i++) {
 
 // add balls
 function addMoreBalls(num) {
-    var balls = ['red', 'yellow', 'blue', 'green'];
+    var balls = ['red', 'yellow', 'blue', 'green', 'purple', 'black'];
 
     _.times(num, function() {
         var newball = balls[Math.floor(Math.random()*balls.length)];
@@ -39,6 +39,7 @@ $('.square').on('click', function() {
         clearCurrentTurn();
         updateDom();
         checkHorizontalBlocks();
+        checkVerticalBlocks();
     }
 });
 
@@ -65,7 +66,6 @@ function checkHorizontalBlocks() {
 }
 
 function checkMatches(ar) {
-    console.log("ROW:", ar);
     var match = [];
     for(var i = 0; i < ar.length; i++) {
        
@@ -90,7 +90,17 @@ function checkMatches(ar) {
 }
 
 function checkVerticalBlocks() {
-    var rows = _.chunk(ballsArray, 10);
+    // var regex = \d*1$;
+    var vertcalBallsArray = [];
+    for(var i = 0; i < ballsArray.length; i++) {
+
+        var regex = new RegExp("d*" + i + "$");
+        
+        if(regex.test(i) === true) {
+            vertcalBallsArray.push(ballsArray[i]);
+        }
+    }
+    console.log("VBA: ", vertcalBallsArray);
 }
 
 function updateDom() {

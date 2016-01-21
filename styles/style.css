@@ -23,12 +23,16 @@
   margin: 0 auto;
   margin-top: 2%; }
   .game .ball.ball-red {
-    background-color: red; }
+    background-color: #E74C3C; }
   .game .ball.ball-yellow {
-    background-color: yellow; }
+    background-color: #F1C40F; }
   .game .ball.ball-blue {
-    background-color: blue; }
+    background-color: #3498DB; }
   .game .ball.ball-green {
-    background-color: green; }
+    background-color: #27AE60; }
+  .game .ball.ball-purple {
+    background-color: #884EA0; }
+  .game .ball.ball-black {
+    background-color: #283747; }
 
 /*# sourceMappingURL=style.css.map */
