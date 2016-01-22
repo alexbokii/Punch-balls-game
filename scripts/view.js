@@ -38,7 +38,7 @@ $('.square').on('click', function() {
         addMoreBalls(2);
         clearCurrentTurn();
         updateDom();
-        checkHorizontalBlocks();
+        checkHorizontalBlocks(ballsArray);
         checkVerticalBlocks();
     }
 });
@@ -54,8 +54,8 @@ function targetIsEmpty(target) {
 }
 
 // check if block of 5 balls is ready
-function checkHorizontalBlocks() {
-    var rows = _.chunk(ballsArray, 10);
+function checkHorizontalBlocks(ar) {
+    var rows = _.chunk(ar, 10);
     for(var i = 0; i < rows.length; i++) {
         var match = checkMatches(rows[i]);
         if(match.length > 4) {
@@ -90,17 +90,16 @@ function checkMatches(ar) {
 }
 
 function checkVerticalBlocks() {
-    // var regex = \d*1$;
     var vertcalBallsArray = [];
-    for(var i = 0; i < ballsArray.length; i++) {
-
-        var regex = new RegExp("d*" + i + "$");
-        
-        if(regex.test(i) === true) {
-            vertcalBallsArray.push(ballsArray[i]);
+    for(var i = 0; i < 100; i++) {
+        for(var j = 0; j < ballsArray.length; j++) {
+            var regex = new RegExp("d*" + i + "$");
+            if(regex.test(j) === true) {
+                vertcalBallsArray.push(ballsArray[j]);
+            }
         }
     }
-    console.log("VBA: ", vertcalBallsArray);
+    checkHorizontalBlocks(vertcalBallsArray);
 }
 
 function updateDom() {
