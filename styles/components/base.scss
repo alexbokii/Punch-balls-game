@@ -52,5 +52,13 @@
         &.ball-black {
             background-color: #283747;
         }
+
+        &.picked {
+            transform: scale(0.94, 0.99);
+            -webkit-transform: scale(0.94, 0.99);
+            -moz-transform: scale(0.94, 0.99);
+            -o-transform: scale(0.94, 0.99);
+            -ms-transform: scale(0.94, 0.99);
+        }
     }
 }

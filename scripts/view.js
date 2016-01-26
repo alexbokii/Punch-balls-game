@@ -23,29 +23,43 @@ function addMoreBalls(num) {
         while (!targetIsEmpty(square));
         $(square).append("<div class='ball ball-" + newball + "'></div>");
     });
+
+    if(checkIfTheGameIsOver()) {
+        console.log("Game is over");
+    }
 }
 
-// move balls
 var ball;
-var target;
 
 $('.square').on('click', function() {
     if(ball == undefined) {
         ball = $(this).find('.ball');
+        ball.addClass('picked');
     }
     else {
-        $(this).append(ball);
-        addMoreBalls(2);
-        clearCurrentTurn();
-        updateDom();
-        checkHorizontalBlocks(ballsArray);
-        checkVerticalBlocks();
+        if($(this).children().length != 0) {
+            console.log("There is already a ball");
+        }
+        else {
+            $(ball).removeClass('picked');
+            $(this).append(ball);
+            
+
+            clearCurrentTurn();
+            updateDom();
+
+            var previousScore = score;
+            checkBlocks(ballsArray);
+            checkVerticalBlocks(ballsArray);
+            if(previousScore === score) {
+                addMoreBalls(4);
+            }
+        }
     }
 });
 
 function clearCurrentTurn() {
     ball = undefined;
-    target = undefined;
 }
 
 // check if target is empty
@@ -54,7 +68,7 @@ function targetIsEmpty(target) {
 }
 
 // check if block of 5 balls is ready
-function checkHorizontalBlocks(ar) {
+function checkBlocks(ar) {
     var rows = _.chunk(ar, 10);
     for(var i = 0; i < rows.length; i++) {
         var match = checkMatches(rows[i]);
@@ -71,7 +85,6 @@ function checkMatches(ar) {
        
         if(typeof ar[i] !== 'boolean'  &&
             typeof ar[i] === 'object') {
-            console.log(ar[i]);
             if(typeof ar[i + 1] === 'object' && ar[i].color == ar[i + 1].color ||
                 typeof ar[i - 1] === 'object' && ar[i].color == ar[i - 1].color) {
                 match.push(ar[i].domEl);
@@ -89,17 +102,17 @@ function checkMatches(ar) {
     return match;
 }
 
-function checkVerticalBlocks() {
+function checkVerticalBlocks(ar) {
     var vertcalBallsArray = [];
     for(var i = 0; i < 100; i++) {
-        for(var j = 0; j < ballsArray.length; j++) {
+        for(var j = 0; j < ar.length; j++) {
             var regex = new RegExp("d*" + i + "$");
             if(regex.test(j) === true) {
-                vertcalBallsArray.push(ballsArray[j]);
+                vertcalBallsArray.push(ar[j]);
             }
         }
     }
-    checkHorizontalBlocks(vertcalBallsArray);
+    checkBlocks(vertcalBallsArray);
 }
 
 function updateDom() {
@@ -127,4 +140,11 @@ function removeBallsFromGame(arr) {
 function updateScore(newscore) {
     score += newscore * 2;
     $('.score h3').html(score);
+}
+
+function checkIfTheGameIsOver() {
+    var ballsInTheField = _.compact(ballsArray).length;
+    if(ballsInTheField > 90) {
+        return true;
+    }
 }
